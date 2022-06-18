@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+  <link href="style.css" rel="stylesheet">
+
+  <title>randQuote()</title>
+</head>
+
+<body>
+  <div class="site-wrapper">
+    <div class="site-wrapper-inner">
+
+      <div class="cover-container">
+        <div class="masthead clearfix">
+          <div class="inner">
+            <h1 id="header">randQuote()</h1>
+          </div>
+        </div>
+
+        <div class="inner cover lead">
+          <div id="quote-content">
+          </div>
+          <br>
+          <br>
+          <button id="quote-button" type="button" class="btn btn-default" data-loading-text="loading...">&laquo; next
+            &raquo;</button>
+        </div>
+
+        <div class="mastfoot">
+          <div class="inner">
+            <p>Developed by @1pav.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="lib/jquery-2.1.4.min.js"></script>
+  <script src="lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+
+  <script>
+    function randquote() {
+      $("#quote-button").button('loading');
+      $.ajax({
+        url: "randquote.php",
+        dataType: "json"
+      }).done(function (response) {
+        $("#quote-content").html(response.quote +
+          "<br>&mdash;&nbsp;<a class=\"author\" target=\"_blank\" href=\"https://www.google.com/search?q=" +
+          encodeURI(response.author) + "\">" + response.author + "</a>");
+        $("#quote-button").button('reset');
+      });
+    }
+
+    $(document).ready(function () {
+      randquote();
+      $("#quote-button").click(function () {
+        randquote();
+      });
+    });
+  </script>
+</body>
+
+</html>
